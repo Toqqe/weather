@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_title %}{% endblock %}
+
+{% block page_css_files %}
+<link rel="stylesheet" href="{% static 'weather/index.css' %}">
+{% endblock %}
+
+{% block page_content %}
+
+
+<div class="body-page{% if code > 1000 %}-a{% endif %}">
+
+    <div class="container">
+        <div class="position-absolute top-0 start-50 translate-middle-x my-5">
+            <form method="POST" class="form-inline" style="width:20rem;">
+                {% csrf_token %}
+                <input class="form-control mr-sm-2" type="search" name="city-post" placeholder="City" aria-label="Search" style="border-radius:12px;">
+            </form>
+        </div>
+
+            
+            <div class="card text-center position-absolute top-50 start-50 translate-middle" style="width:20rem;">
+
+                {% if is_location %}
+                <div class="card-header h5">
+                {{country}}
+                </div>
+
+                <div class="card-body my-3">
+                    <p class="card-title p-3 h2">{{name}}</p>
+                    <img src="{{icon}}" class="card-img-top" alt="..." style="width:5rem; height:5rem;">
+                    <p class="card-text p-3 h5">{{text}}</p>
+                    <p class="card-text p-3 h5">{{temp_c}}°C</p>
+                    <p class="card-text h5">{{tz_id}}</p>
+                </div>
+
+                <div class="card-footer text-muted">{{localtime}}</div>
+
+                {% else %}
+                <div class="card-body my-3">
+                    <p class="card-text p-3 h5">No results :[</p>
+                </div>
+
+
+                {% endif %}
+            </div>
+            <a href="https://www.weatherapi.com/" class="position-absolute top-100 start-50 translate-middle-x " style="margin-top: -5rem;" title="Free Weather API"><img src='//cdn.weatherapi.com/v4/images/weatherapi_logo.png' alt="Weather data by WeatherAPI.com" border="0"></a>
+
+    </div>
+
+</div>
+
+{% endblock  %}
